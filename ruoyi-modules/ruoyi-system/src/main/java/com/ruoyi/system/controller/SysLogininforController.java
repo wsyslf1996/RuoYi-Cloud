@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ruoyi.common.core.constant.CacheConstants;
 import com.ruoyi.common.core.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.web.controller.BaseController;
-import com.ruoyi.common.core.web.domain.AjaxResult;
+import com.ruoyi.common.core.web.domain.R;
 import com.ruoyi.common.core.web.page.TableDataInfo;
 import com.ruoyi.common.log.annotation.Log;
 import com.ruoyi.common.log.enums.BusinessType;
@@ -25,7 +25,7 @@ import com.ruoyi.system.service.ISysLogininforService;
 
 /**
  * 系统访问记录
- * 
+ *
  * @author ruoyi
  */
 @RestController
@@ -60,7 +60,7 @@ public class SysLogininforController extends BaseController
     @RequiresPermissions("system:logininfor:remove")
     @Log(title = "登录日志", businessType = BusinessType.DELETE)
     @DeleteMapping("/{infoIds}")
-    public AjaxResult remove(@PathVariable Long[] infoIds)
+    public R remove(@PathVariable Long[] infoIds)
     {
         return toAjax(logininforService.deleteLogininforByIds(infoIds));
     }
@@ -68,7 +68,7 @@ public class SysLogininforController extends BaseController
     @RequiresPermissions("system:logininfor:remove")
     @Log(title = "登录日志", businessType = BusinessType.DELETE)
     @DeleteMapping("/clean")
-    public AjaxResult clean()
+    public R clean()
     {
         logininforService.cleanLogininfor();
         return success();
@@ -77,7 +77,7 @@ public class SysLogininforController extends BaseController
     @RequiresPermissions("system:logininfor:unlock")
     @Log(title = "账户解锁", businessType = BusinessType.OTHER)
     @GetMapping("/unlock/{userName}")
-    public AjaxResult unlock(@PathVariable("userName") String userName)
+    public R unlock(@PathVariable("userName") String userName)
     {
         redisService.deleteObject(CacheConstants.PWD_ERR_CNT_KEY + userName);
         return success();
@@ -85,7 +85,7 @@ public class SysLogininforController extends BaseController
 
     @InnerAuth
     @PostMapping
-    public AjaxResult add(@RequestBody SysLogininfor logininfor)
+    public R add(@RequestBody SysLogininfor logininfor)
     {
         return toAjax(logininforService.insertLogininfor(logininfor));
     }

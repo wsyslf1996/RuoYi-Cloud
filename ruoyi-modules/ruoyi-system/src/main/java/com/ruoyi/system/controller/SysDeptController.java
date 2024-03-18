@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ruoyi.common.core.constant.UserConstants;
 import com.ruoyi.common.core.utils.StringUtils;
 import com.ruoyi.common.core.web.controller.BaseController;
-import com.ruoyi.common.core.web.domain.AjaxResult;
+import com.ruoyi.common.core.web.domain.R;
 import com.ruoyi.common.log.annotation.Log;
 import com.ruoyi.common.log.enums.BusinessType;
 import com.ruoyi.common.security.annotation.RequiresPermissions;
@@ -25,7 +25,7 @@ import com.ruoyi.system.service.ISysDeptService;
 
 /**
  * 部门信息
- * 
+ *
  * @author ruoyi
  */
 @RestController
@@ -40,7 +40,7 @@ public class SysDeptController extends BaseController
      */
     @RequiresPermissions("system:dept:list")
     @GetMapping("/list")
-    public AjaxResult list(SysDept dept)
+    public R list(SysDept dept)
     {
         List<SysDept> depts = deptService.selectDeptList(dept);
         return success(depts);
@@ -51,7 +51,7 @@ public class SysDeptController extends BaseController
      */
     @RequiresPermissions("system:dept:list")
     @GetMapping("/list/exclude/{deptId}")
-    public AjaxResult excludeChild(@PathVariable(value = "deptId", required = false) Long deptId)
+    public R excludeChild(@PathVariable(value = "deptId", required = false) Long deptId)
     {
         List<SysDept> depts = deptService.selectDeptList(new SysDept());
         depts.removeIf(d -> d.getDeptId().intValue() == deptId || ArrayUtils.contains(StringUtils.split(d.getAncestors(), ","), deptId + ""));
@@ -63,7 +63,7 @@ public class SysDeptController extends BaseController
      */
     @RequiresPermissions("system:dept:query")
     @GetMapping(value = "/{deptId}")
-    public AjaxResult getInfo(@PathVariable Long deptId)
+    public R getInfo(@PathVariable Long deptId)
     {
         deptService.checkDeptDataScope(deptId);
         return success(deptService.selectDeptById(deptId));
@@ -75,7 +75,7 @@ public class SysDeptController extends BaseController
     @RequiresPermissions("system:dept:add")
     @Log(title = "部门管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysDept dept)
+    public R add(@Validated @RequestBody SysDept dept)
     {
         if (!deptService.checkDeptNameUnique(dept))
         {
@@ -91,7 +91,7 @@ public class SysDeptController extends BaseController
     @RequiresPermissions("system:dept:edit")
     @Log(title = "部门管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysDept dept)
+    public R edit(@Validated @RequestBody SysDept dept)
     {
         Long deptId = dept.getDeptId();
         deptService.checkDeptDataScope(deptId);
@@ -117,7 +117,7 @@ public class SysDeptController extends BaseController
     @RequiresPermissions("system:dept:remove")
     @Log(title = "部门管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{deptId}")
-    public AjaxResult remove(@PathVariable Long deptId)
+    public R remove(@PathVariable Long deptId)
     {
         if (deptService.hasChildByDeptId(deptId))
         {

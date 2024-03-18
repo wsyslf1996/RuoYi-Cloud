@@ -9,7 +9,7 @@ import org.springframework.web.reactive.function.server.HandlerFunction;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import com.ruoyi.common.core.exception.CaptchaException;
-import com.ruoyi.common.core.web.domain.AjaxResult;
+import com.ruoyi.common.core.web.domain.R;
 import com.ruoyi.gateway.service.ValidateCodeService;
 import reactor.core.publisher.Mono;
 
@@ -27,7 +27,7 @@ public class ValidateCodeHandler implements HandlerFunction<ServerResponse>
     @Override
     public Mono<ServerResponse> handle(ServerRequest serverRequest)
     {
-        AjaxResult ajax;
+        R ajax;
         try
         {
             ajax = validateCodeService.createCaptcha();

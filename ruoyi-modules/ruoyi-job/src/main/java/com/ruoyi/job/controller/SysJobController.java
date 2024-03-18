@@ -2,6 +2,8 @@ package com.ruoyi.job.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.common.core.web.domain.R;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,7 +19,6 @@ import com.ruoyi.common.core.exception.job.TaskException;
 import com.ruoyi.common.core.utils.StringUtils;
 import com.ruoyi.common.core.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.web.controller.BaseController;
-import com.ruoyi.common.core.web.domain.AjaxResult;
 import com.ruoyi.common.core.web.page.TableDataInfo;
 import com.ruoyi.common.log.annotation.Log;
 import com.ruoyi.common.log.enums.BusinessType;
@@ -30,7 +31,7 @@ import com.ruoyi.job.util.ScheduleUtils;
 
 /**
  * 调度任务信息操作处理
- * 
+ *
  * @author ruoyi
  */
 @RestController
@@ -70,7 +71,7 @@ public class SysJobController extends BaseController
      */
     @RequiresPermissions("monitor:job:query")
     @GetMapping(value = "/{jobId}")
-    public AjaxResult getInfo(@PathVariable("jobId") Long jobId)
+    public R getInfo(@PathVariable("jobId") Long jobId)
     {
         return success(jobService.selectJobById(jobId));
     }
@@ -81,7 +82,7 @@ public class SysJobController extends BaseController
     @RequiresPermissions("monitor:job:add")
     @Log(title = "定时任务", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody SysJob job) throws SchedulerException, TaskException
+    public R add(@RequestBody SysJob job) throws SchedulerException, TaskException
     {
         if (!CronUtils.isValid(job.getCronExpression()))
         {
@@ -117,7 +118,7 @@ public class SysJobController extends BaseController
     @RequiresPermissions("monitor:job:edit")
     @Log(title = "定时任务", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody SysJob job) throws SchedulerException, TaskException
+    public R edit(@RequestBody SysJob job) throws SchedulerException, TaskException
     {
         if (!CronUtils.isValid(job.getCronExpression()))
         {
@@ -153,7 +154,7 @@ public class SysJobController extends BaseController
     @RequiresPermissions("monitor:job:changeStatus")
     @Log(title = "定时任务", businessType = BusinessType.UPDATE)
     @PutMapping("/changeStatus")
-    public AjaxResult changeStatus(@RequestBody SysJob job) throws SchedulerException
+    public R changeStatus(@RequestBody SysJob job) throws SchedulerException
     {
         SysJob newJob = jobService.selectJobById(job.getJobId());
         newJob.setStatus(job.getStatus());
@@ -166,7 +167,7 @@ public class SysJobController extends BaseController
     @RequiresPermissions("monitor:job:changeStatus")
     @Log(title = "定时任务", businessType = BusinessType.UPDATE)
     @PutMapping("/run")
-    public AjaxResult run(@RequestBody SysJob job) throws SchedulerException
+    public R run(@RequestBody SysJob job) throws SchedulerException
     {
         boolean result = jobService.run(job);
         return result ? success() : error("任务不存在或已过期！");
@@ -178,7 +179,7 @@ public class SysJobController extends BaseController
     @RequiresPermissions("monitor:job:remove")
     @Log(title = "定时任务", businessType = BusinessType.DELETE)
     @DeleteMapping("/{jobIds}")
-    public AjaxResult remove(@PathVariable Long[] jobIds) throws SchedulerException, TaskException
+    public R remove(@PathVariable Long[] jobIds) throws SchedulerException, TaskException
     {
         jobService.deleteJobByIds(jobIds);
         return success();

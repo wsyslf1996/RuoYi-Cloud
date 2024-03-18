@@ -3,6 +3,8 @@ package com.ruoyi.system.api.domain;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.annotation.Excel;
@@ -11,9 +13,10 @@ import com.ruoyi.common.core.web.domain.BaseEntity;
 
 /**
  * 字典类型表 sys_dict_type
- * 
+ *
  * @author ruoyi
  */
+@Data
 public class SysDictType extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -39,21 +42,11 @@ public class SysDictType extends BaseEntity
         return dictId;
     }
 
-    public void setDictId(Long dictId)
-    {
-        this.dictId = dictId;
-    }
-
     @NotBlank(message = "字典名称不能为空")
     @Size(min = 0, max = 100, message = "字典类型名称长度不能超过100个字符")
     public String getDictName()
     {
         return dictName;
-    }
-
-    public void setDictName(String dictName)
-    {
-        this.dictName = dictName;
     }
 
     @NotBlank(message = "字典类型不能为空")
@@ -64,21 +57,6 @@ public class SysDictType extends BaseEntity
         return dictType;
     }
 
-    public void setDictType(String dictType)
-    {
-        this.dictType = dictType;
-    }
-
-    public String getStatus()
-    {
-        return status;
-    }
-
-    public void setStatus(String status)
-    {
-        this.status = status;
-    }
-    
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)

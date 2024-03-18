@@ -23,13 +23,13 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import com.alibaba.fastjson2.JSON;
 import com.ruoyi.common.core.constant.Constants;
-import com.ruoyi.common.core.domain.R;
-import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.common.core.web.domain.R;
+import com.ruoyi.common.core.utils.text.Convert;
 import reactor.core.publisher.Mono;
 
 /**
  * 客户端工具类
- * 
+ *
  * @author ruoyi
  */
 public class ServletUtils
@@ -189,7 +189,7 @@ public class ServletUtils
 
     /**
      * 将字符串渲染到客户端
-     * 
+     *
      * @param response 渲染对象
      * @param string 待渲染的字符串
      */
@@ -210,7 +210,7 @@ public class ServletUtils
 
     /**
      * 是否是Ajax异步请求
-     * 
+     *
      * @param request
      */
     public static boolean isAjaxRequest(HttpServletRequest request)
@@ -239,7 +239,7 @@ public class ServletUtils
 
     /**
      * 内容编码
-     * 
+     *
      * @param str 内容
      * @return 编码后的内容
      */
@@ -257,7 +257,7 @@ public class ServletUtils
 
     /**
      * 内容解码
-     * 
+     *
      * @param str 内容
      * @return 解码后的内容
      */

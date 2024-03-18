@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.ruoyi.common.core.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.web.controller.BaseController;
-import com.ruoyi.common.core.web.domain.AjaxResult;
+import com.ruoyi.common.core.web.domain.R;
 import com.ruoyi.common.core.web.page.TableDataInfo;
 import com.ruoyi.common.log.annotation.Log;
 import com.ruoyi.common.log.enums.BusinessType;
@@ -25,7 +25,7 @@ import com.ruoyi.system.service.ISysPostService;
 
 /**
  * 岗位信息操作处理
- * 
+ *
  * @author ruoyi
  */
 @RestController
@@ -62,7 +62,7 @@ public class SysPostController extends BaseController
      */
     @RequiresPermissions("system:post:query")
     @GetMapping(value = "/{postId}")
-    public AjaxResult getInfo(@PathVariable Long postId)
+    public R getInfo(@PathVariable Long postId)
     {
         return success(postService.selectPostById(postId));
     }
@@ -73,7 +73,7 @@ public class SysPostController extends BaseController
     @RequiresPermissions("system:post:add")
     @Log(title = "岗位管理", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysPost post)
+    public R add(@Validated @RequestBody SysPost post)
     {
         if (!postService.checkPostNameUnique(post))
         {
@@ -93,7 +93,7 @@ public class SysPostController extends BaseController
     @RequiresPermissions("system:post:edit")
     @Log(title = "岗位管理", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysPost post)
+    public R edit(@Validated @RequestBody SysPost post)
     {
         if (!postService.checkPostNameUnique(post))
         {
@@ -113,7 +113,7 @@ public class SysPostController extends BaseController
     @RequiresPermissions("system:post:remove")
     @Log(title = "岗位管理", businessType = BusinessType.DELETE)
     @DeleteMapping("/{postIds}")
-    public AjaxResult remove(@PathVariable Long[] postIds)
+    public R remove(@PathVariable Long[] postIds)
     {
         return toAjax(postService.deletePostByIds(postIds));
     }
@@ -122,7 +122,7 @@ public class SysPostController extends BaseController
      * 获取岗位选择框列表
      */
     @GetMapping("/optionselect")
-    public AjaxResult optionselect()
+    public R optionselect()
     {
         List<SysPost> posts = postService.selectPostAll();
         return success(posts);

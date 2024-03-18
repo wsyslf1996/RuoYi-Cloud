@@ -15,7 +15,7 @@ import com.ruoyi.common.core.exception.CaptchaException;
 import com.ruoyi.common.core.utils.StringUtils;
 import com.ruoyi.common.core.utils.sign.Base64;
 import com.ruoyi.common.core.utils.uuid.IdUtils;
-import com.ruoyi.common.core.web.domain.AjaxResult;
+import com.ruoyi.common.core.web.domain.R;
 import com.ruoyi.common.redis.service.RedisService;
 import com.ruoyi.gateway.config.properties.CaptchaProperties;
 import com.ruoyi.gateway.service.ValidateCodeService;
@@ -44,9 +44,9 @@ public class ValidateCodeServiceImpl implements ValidateCodeService
      * 生成验证码
      */
     @Override
-    public AjaxResult createCaptcha() throws IOException, CaptchaException
+    public R createCaptcha() throws IOException, CaptchaException
     {
-        AjaxResult ajax = AjaxResult.success();
+        R ajax = R.ok();
         boolean captchaEnabled = captchaProperties.getEnabled();
         ajax.put("captchaEnabled", captchaEnabled);
         if (!captchaEnabled)
@@ -85,7 +85,7 @@ public class ValidateCodeServiceImpl implements ValidateCodeService
         }
         catch (IOException e)
         {
-            return AjaxResult.error(e.getMessage());
+            return R.fail(e.getMessage());
         }
 
         ajax.put("uuid", uuid);

@@ -10,12 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import com.ruoyi.common.core.domain.R;
+import com.ruoyi.common.core.web.domain.R;
 import com.ruoyi.common.core.utils.StringUtils;
 import com.ruoyi.common.core.utils.file.FileTypeUtils;
 import com.ruoyi.common.core.utils.file.MimeTypeUtils;
 import com.ruoyi.common.core.web.controller.BaseController;
-import com.ruoyi.common.core.web.domain.AjaxResult;
 import com.ruoyi.common.log.annotation.Log;
 import com.ruoyi.common.log.enums.BusinessType;
 import com.ruoyi.common.security.service.TokenService;
@@ -28,7 +27,7 @@ import com.ruoyi.system.service.ISysUserService;
 
 /**
  * 个人信息 业务处理
- * 
+ *
  * @author ruoyi
  */
 @RestController
@@ -37,10 +36,10 @@ public class SysProfileController extends BaseController
 {
     @Autowired
     private ISysUserService userService;
-    
+
     @Autowired
     private TokenService tokenService;
-    
+
     @Autowired
     private RemoteFileService remoteFileService;
 
@@ -48,11 +47,11 @@ public class SysProfileController extends BaseController
      * 个人信息
      */
     @GetMapping
-    public AjaxResult profile()
+    public R profile()
     {
         String username = SecurityUtils.getUsername();
         SysUser user = userService.selectUserByUserName(username);
-        AjaxResult ajax = AjaxResult.success(user);
+        R ajax = R.ok(user);
         ajax.put("roleGroup", userService.selectUserRoleGroup(username));
         ajax.put("postGroup", userService.selectUserPostGroup(username));
         return ajax;
@@ -63,7 +62,7 @@ public class SysProfileController extends BaseController
      */
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult updateProfile(@RequestBody SysUser user)
+    public R updateProfile(@RequestBody SysUser user)
     {
         LoginUser loginUser = SecurityUtils.getLoginUser();
         SysUser currentUser = loginUser.getSysUser();
@@ -93,7 +92,7 @@ public class SysProfileController extends BaseController
      */
     @Log(title = "个人信息", businessType = BusinessType.UPDATE)
     @PutMapping("/updatePwd")
-    public AjaxResult updatePwd(String oldPassword, String newPassword)
+    public R updatePwd(String oldPassword, String newPassword)
     {
         String username = SecurityUtils.getUsername();
         SysUser user = userService.selectUserByUserName(username);
@@ -117,13 +116,13 @@ public class SysProfileController extends BaseController
         }
         return error("修改密码异常，请联系管理员");
     }
-    
+
     /**
      * 头像上传
      */
     @Log(title = "用户头像", businessType = BusinessType.UPDATE)
     @PostMapping("/avatar")
-    public AjaxResult avatar(@RequestParam("avatarfile") MultipartFile file)
+    public R avatar(@RequestParam("avatarfile") MultipartFile file)
     {
         if (!file.isEmpty())
         {
@@ -141,7 +140,7 @@ public class SysProfileController extends BaseController
             String url = fileResult.getData().getUrl();
             if (userService.updateUserAvatar(loginUser.getUsername(), url))
             {
-                AjaxResult ajax = AjaxResult.success();
+                R ajax = R.ok();
                 ajax.put("imgUrl", url);
                 // 更新缓存用户头像
                 loginUser.getSysUser().setAvatar(url);

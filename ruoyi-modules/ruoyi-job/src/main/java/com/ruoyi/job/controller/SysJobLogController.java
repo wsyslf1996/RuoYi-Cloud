@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.ruoyi.common.core.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.web.controller.BaseController;
-import com.ruoyi.common.core.web.domain.AjaxResult;
+import com.ruoyi.common.core.web.domain.R;
 import com.ruoyi.common.core.web.page.TableDataInfo;
 import com.ruoyi.common.log.annotation.Log;
 import com.ruoyi.common.log.enums.BusinessType;
@@ -21,7 +21,7 @@ import com.ruoyi.job.service.ISysJobLogService;
 
 /**
  * 调度日志操作处理
- * 
+ *
  * @author ruoyi
  */
 @RestController
@@ -61,7 +61,7 @@ public class SysJobLogController extends BaseController
      */
     @RequiresPermissions("monitor:job:query")
     @GetMapping(value = "/{jobLogId}")
-    public AjaxResult getInfo(@PathVariable Long jobLogId)
+    public R getInfo(@PathVariable Long jobLogId)
     {
         return success(jobLogService.selectJobLogById(jobLogId));
     }
@@ -72,7 +72,7 @@ public class SysJobLogController extends BaseController
     @RequiresPermissions("monitor:job:remove")
     @Log(title = "定时任务调度日志", businessType = BusinessType.DELETE)
     @DeleteMapping("/{jobLogIds}")
-    public AjaxResult remove(@PathVariable Long[] jobLogIds)
+    public R remove(@PathVariable Long[] jobLogIds)
     {
         return toAjax(jobLogService.deleteJobLogByIds(jobLogIds));
     }
@@ -83,7 +83,7 @@ public class SysJobLogController extends BaseController
     @RequiresPermissions("monitor:job:remove")
     @Log(title = "调度日志", businessType = BusinessType.CLEAN)
     @DeleteMapping("/clean")
-    public AjaxResult clean()
+    public R clean()
     {
         jobLogService.cleanJobLog();
         return success();

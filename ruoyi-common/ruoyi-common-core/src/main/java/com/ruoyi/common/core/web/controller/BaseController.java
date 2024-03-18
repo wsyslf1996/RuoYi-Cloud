@@ -3,6 +3,8 @@ package com.ruoyi.common.core.web.controller;
 import java.beans.PropertyEditorSupport;
 import java.util.Date;
 import java.util.List;
+
+import com.ruoyi.common.core.web.domain.R;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.WebDataBinder;
@@ -11,12 +13,11 @@ import com.github.pagehelper.PageInfo;
 import com.ruoyi.common.core.constant.HttpStatus;
 import com.ruoyi.common.core.utils.DateUtils;
 import com.ruoyi.common.core.utils.PageUtils;
-import com.ruoyi.common.core.web.domain.AjaxResult;
 import com.ruoyi.common.core.web.page.TableDataInfo;
 
 /**
  * web层通用数据处理
- * 
+ *
  * @author ruoyi
  */
 public class BaseController
@@ -73,69 +74,69 @@ public class BaseController
     /**
      * 返回成功
      */
-    public AjaxResult success()
+    public R success()
     {
-        return AjaxResult.success();
+        return R.ok();
     }
 
     /**
      * 返回成功消息
      */
-    public AjaxResult success(String message)
+    public R success(String message)
     {
-        return AjaxResult.success(message);
+        return R.ok(message);
     }
 
     /**
      * 返回成功消息
      */
-    public AjaxResult success(Object data)
+    public R success(Object data)
     {
-        return AjaxResult.success(data);
+        return R.ok(data);
     }
 
     /**
      * 返回失败消息
      */
-    public AjaxResult error()
+    public R error()
     {
-        return AjaxResult.error();
+        return R.fail();
     }
 
     /**
      * 返回失败消息
      */
-    public AjaxResult error(String message)
+    public R error(String message)
     {
-        return AjaxResult.error(message);
+        return R.fail(message);
     }
 
     /**
      * 返回警告消息
      */
-    public AjaxResult warn(String message)
+    public R warn(String message)
     {
-        return AjaxResult.warn(message);
+        return R.warn(message);
     }
 
     /**
      * 响应返回结果
-     * 
+     *
      * @param rows 影响行数
      * @return 操作结果
      */
-    protected AjaxResult toAjax(int rows)
+    protected R toAjax(int rows)
     {
-        return rows > 0 ? AjaxResult.success() : AjaxResult.error();
+        return rows > 0 ? R.ok() : R.fail();
     }
 
     /**
      * 响应返回结果
-     * 
+     *
      * @param result 结果
      * @return 操作结果
      */
-    protected AjaxResult toAjax(boolean result)
+    protected R toAjax(boolean result)
     {
         return result ? success() : error();
     }

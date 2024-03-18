@@ -1,7 +1,6 @@
 package ${packageName}.controller;
 
 import java.util.List;
-import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +17,7 @@ import com.ruoyi.common.security.annotation.RequiresPermissions;
 import ${packageName}.domain.${ClassName};
 import ${packageName}.service.I${ClassName}Service;
 import com.ruoyi.common.core.web.controller.BaseController;
-import com.ruoyi.common.core.web.domain.AjaxResult;
+import com.ruoyi.common.core.web.domain.R;
 import com.ruoyi.common.core.utils.poi.ExcelUtil;
 #if($table.crud || $table.sub)
 import com.ruoyi.common.core.web.page.TableDataInfo;
@@ -27,7 +26,7 @@ import com.ruoyi.common.core.web.page.TableDataInfo;
 
 /**
  * ${functionName}Controller
- * 
+ *
  * @author ${author}
  * @date ${datetime}
  */
@@ -51,7 +50,7 @@ public class ${ClassName}Controller extends BaseController
         return getDataTable(list);
     }
 #elseif($table.tree)
-    public AjaxResult list(${ClassName} ${className})
+    public R list(${ClassName} ${className})
     {
         List<${ClassName}> list = ${className}Service.select${ClassName}List(${className});
         return success(list);
@@ -76,7 +75,7 @@ public class ${ClassName}Controller extends BaseController
      */
     @RequiresPermissions("${permissionPrefix}:query")
     @GetMapping(value = "/{${pkColumn.javaField}}")
-    public AjaxResult getInfo(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField})
+    public R getInfo(@PathVariable("${pkColumn.javaField}") ${pkColumn.javaType} ${pkColumn.javaField})
     {
         return success(${className}Service.select${ClassName}By${pkColumn.capJavaField}(${pkColumn.javaField}));
     }
@@ -87,7 +86,7 @@ public class ${ClassName}Controller extends BaseController
     @RequiresPermissions("${permissionPrefix}:add")
     @Log(title = "${functionName}", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@RequestBody ${ClassName} ${className})
+    public R add(@RequestBody ${ClassName} ${className})
     {
         return toAjax(${className}Service.insert${ClassName}(${className}));
     }
@@ -98,7 +97,7 @@ public class ${ClassName}Controller extends BaseController
     @RequiresPermissions("${permissionPrefix}:edit")
     @Log(title = "${functionName}", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody ${ClassName} ${className})
+    public R edit(@RequestBody ${ClassName} ${className})
     {
         return toAjax(${className}Service.update${ClassName}(${className}));
     }
@@ -109,7 +108,7 @@ public class ${ClassName}Controller extends BaseController
     @RequiresPermissions("${permissionPrefix}:remove")
     @Log(title = "${functionName}", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{${pkColumn.javaField}s}")
-    public AjaxResult remove(@PathVariable ${pkColumn.javaType}[] ${pkColumn.javaField}s)
+    public R remove(@PathVariable ${pkColumn.javaType}[] ${pkColumn.javaField}s)
     {
         return toAjax(${className}Service.delete${ClassName}By${pkColumn.capJavaField}s(${pkColumn.javaField}s));
     }

@@ -1,11 +1,11 @@
 package com.ruoyi.common.core.web.page;
 
-import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.common.core.utils.text.Convert;
 import com.ruoyi.common.core.utils.ServletUtils;
 
 /**
  * 表格数据处理
- * 
+ *
  * @author ruoyi
  */
 public class TableSupport

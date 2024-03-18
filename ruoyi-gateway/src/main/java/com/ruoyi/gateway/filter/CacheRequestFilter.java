@@ -2,6 +2,8 @@ package com.ruoyi.gateway.filter;
 
 import java.util.Collections;
 import java.util.List;
+
+import lombok.Data;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.OrderedGatewayFilter;
@@ -14,7 +16,7 @@ import reactor.core.publisher.Mono;
 
 /**
  * 获取body请求数据（解决流不能重复读取问题）
- * 
+ *
  * @author ruoyi
  */
 @Component
@@ -70,18 +72,10 @@ public class CacheRequestFilter extends AbstractGatewayFilterFactory<CacheReques
         return Collections.singletonList("order");
     }
 
+    @Data
     static class Config
     {
         private Integer order;
 
-        public Integer getOrder()
-        {
-            return order;
-        }
-
-        public void setOrder(Integer order)
-        {
-            this.order = order;
-        }
     }
 }

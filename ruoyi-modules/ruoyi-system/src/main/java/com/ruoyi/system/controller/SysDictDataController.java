@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ruoyi.common.core.utils.StringUtils;
 import com.ruoyi.common.core.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.web.controller.BaseController;
-import com.ruoyi.common.core.web.domain.AjaxResult;
+import com.ruoyi.common.core.web.domain.R;
 import com.ruoyi.common.core.web.page.TableDataInfo;
 import com.ruoyi.common.log.annotation.Log;
 import com.ruoyi.common.log.enums.BusinessType;
@@ -28,7 +28,7 @@ import com.ruoyi.system.service.ISysDictTypeService;
 
 /**
  * 数据字典信息
- * 
+ *
  * @author ruoyi
  */
 @RestController
@@ -37,7 +37,7 @@ public class SysDictDataController extends BaseController
 {
     @Autowired
     private ISysDictDataService dictDataService;
-    
+
     @Autowired
     private ISysDictTypeService dictTypeService;
 
@@ -65,7 +65,7 @@ public class SysDictDataController extends BaseController
      */
     @RequiresPermissions("system:dict:query")
     @GetMapping(value = "/{dictCode}")
-    public AjaxResult getInfo(@PathVariable Long dictCode)
+    public R getInfo(@PathVariable Long dictCode)
     {
         return success(dictDataService.selectDictDataById(dictCode));
     }
@@ -74,7 +74,7 @@ public class SysDictDataController extends BaseController
      * 根据字典类型查询字典数据信息
      */
     @GetMapping(value = "/type/{dictType}")
-    public AjaxResult dictType(@PathVariable String dictType)
+    public R dictType(@PathVariable String dictType)
     {
         List<SysDictData> data = dictTypeService.selectDictDataByType(dictType);
         if (StringUtils.isNull(data))
@@ -90,7 +90,7 @@ public class SysDictDataController extends BaseController
     @RequiresPermissions("system:dict:add")
     @Log(title = "字典数据", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysDictData dict)
+    public R add(@Validated @RequestBody SysDictData dict)
     {
         dict.setCreateBy(SecurityUtils.getUsername());
         return toAjax(dictDataService.insertDictData(dict));
@@ -102,7 +102,7 @@ public class SysDictDataController extends BaseController
     @RequiresPermissions("system:dict:edit")
     @Log(title = "字典数据", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysDictData dict)
+    public R edit(@Validated @RequestBody SysDictData dict)
     {
         dict.setUpdateBy(SecurityUtils.getUsername());
         return toAjax(dictDataService.updateDictData(dict));
@@ -114,7 +114,7 @@ public class SysDictDataController extends BaseController
     @RequiresPermissions("system:dict:remove")
     @Log(title = "字典类型", businessType = BusinessType.DELETE)
     @DeleteMapping("/{dictCodes}")
-    public AjaxResult remove(@PathVariable Long[] dictCodes)
+    public R remove(@PathVariable Long[] dictCodes)
     {
         dictDataService.deleteDictDataByIds(dictCodes);
         return success();

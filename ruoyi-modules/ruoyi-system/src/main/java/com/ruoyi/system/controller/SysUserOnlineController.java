@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ruoyi.common.core.constant.CacheConstants;
 import com.ruoyi.common.core.utils.StringUtils;
 import com.ruoyi.common.core.web.controller.BaseController;
-import com.ruoyi.common.core.web.domain.AjaxResult;
+import com.ruoyi.common.core.web.domain.R;
 import com.ruoyi.common.core.web.page.TableDataInfo;
 import com.ruoyi.common.log.annotation.Log;
 import com.ruoyi.common.log.enums.BusinessType;
@@ -25,7 +25,7 @@ import com.ruoyi.system.service.ISysUserOnlineService;
 
 /**
  * 在线用户监控
- * 
+ *
  * @author ruoyi
  */
 @RestController
@@ -75,7 +75,7 @@ public class SysUserOnlineController extends BaseController
     @RequiresPermissions("monitor:online:forceLogout")
     @Log(title = "在线用户", businessType = BusinessType.FORCE)
     @DeleteMapping("/{tokenId}")
-    public AjaxResult forceLogout(@PathVariable String tokenId)
+    public R forceLogout(@PathVariable String tokenId)
     {
         redisService.deleteObject(CacheConstants.LOGIN_TOKEN_KEY + tokenId);
         return success();

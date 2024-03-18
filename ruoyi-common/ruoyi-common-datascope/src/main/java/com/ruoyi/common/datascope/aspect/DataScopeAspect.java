@@ -7,7 +7,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 import com.ruoyi.common.core.context.SecurityContextHolder;
-import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.common.core.utils.text.Convert;
 import com.ruoyi.common.core.utils.StringUtils;
 import com.ruoyi.common.core.web.domain.BaseEntity;
 import com.ruoyi.common.datascope.annotation.DataScope;
@@ -18,7 +18,7 @@ import com.ruoyi.system.api.model.LoginUser;
 
 /**
  * 数据过滤处理
- * 
+ *
  * @author ruoyi
  */
 @Aspect
@@ -81,7 +81,7 @@ public class DataScopeAspect
 
     /**
      * 数据范围过滤
-     * 
+     *
      * @param joinPoint 切点
      * @param user 用户
      * @param deptAlias 部门别名

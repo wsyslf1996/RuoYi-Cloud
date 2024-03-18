@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Component;
 import com.ruoyi.common.core.constant.CacheConstants;
 import com.ruoyi.common.core.constant.SecurityConstants;
@@ -21,7 +22,7 @@ import com.ruoyi.system.api.model.LoginUser;
 
 /**
  * token验证处理
- * 
+ *
  * @author ruoyi
  */
 @Component

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.ruoyi.common.core.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.web.controller.BaseController;
-import com.ruoyi.common.core.web.domain.AjaxResult;
+import com.ruoyi.common.core.web.domain.R;
 import com.ruoyi.common.core.web.page.TableDataInfo;
 import com.ruoyi.common.log.annotation.Log;
 import com.ruoyi.common.log.enums.BusinessType;
@@ -25,7 +25,7 @@ import com.ruoyi.system.service.ISysDictTypeService;
 
 /**
  * 数据字典信息
- * 
+ *
  * @author ruoyi
  */
 @RestController
@@ -59,7 +59,7 @@ public class SysDictTypeController extends BaseController
      */
     @RequiresPermissions("system:dict:query")
     @GetMapping(value = "/{dictId}")
-    public AjaxResult getInfo(@PathVariable Long dictId)
+    public R getInfo(@PathVariable Long dictId)
     {
         return success(dictTypeService.selectDictTypeById(dictId));
     }
@@ -70,7 +70,7 @@ public class SysDictTypeController extends BaseController
     @RequiresPermissions("system:dict:add")
     @Log(title = "字典类型", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysDictType dict)
+    public R add(@Validated @RequestBody SysDictType dict)
     {
         if (!dictTypeService.checkDictTypeUnique(dict))
         {
@@ -86,7 +86,7 @@ public class SysDictTypeController extends BaseController
     @RequiresPermissions("system:dict:edit")
     @Log(title = "字典类型", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysDictType dict)
+    public R edit(@Validated @RequestBody SysDictType dict)
     {
         if (!dictTypeService.checkDictTypeUnique(dict))
         {
@@ -102,7 +102,7 @@ public class SysDictTypeController extends BaseController
     @RequiresPermissions("system:dict:remove")
     @Log(title = "字典类型", businessType = BusinessType.DELETE)
     @DeleteMapping("/{dictIds}")
-    public AjaxResult remove(@PathVariable Long[] dictIds)
+    public R remove(@PathVariable Long[] dictIds)
     {
         dictTypeService.deleteDictTypeByIds(dictIds);
         return success();
@@ -114,7 +114,7 @@ public class SysDictTypeController extends BaseController
     @RequiresPermissions("system:dict:remove")
     @Log(title = "字典类型", businessType = BusinessType.CLEAN)
     @DeleteMapping("/refreshCache")
-    public AjaxResult refreshCache()
+    public R refreshCache()
     {
         dictTypeService.resetDictCache();
         return success();
@@ -124,7 +124,7 @@ public class SysDictTypeController extends BaseController
      * 获取字典选择框列表
      */
     @GetMapping("/optionselect")
-    public AjaxResult optionselect()
+    public R optionselect()
     {
         List<SysDictType> dictTypes = dictTypeService.selectDictTypeAll();
         return success(dictTypes);

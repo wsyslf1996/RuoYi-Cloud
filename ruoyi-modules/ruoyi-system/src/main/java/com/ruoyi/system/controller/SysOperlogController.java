@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.ruoyi.common.core.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.web.controller.BaseController;
-import com.ruoyi.common.core.web.domain.AjaxResult;
+import com.ruoyi.common.core.web.domain.R;
 import com.ruoyi.common.core.web.page.TableDataInfo;
 import com.ruoyi.common.log.annotation.Log;
 import com.ruoyi.common.log.enums.BusinessType;
@@ -23,7 +23,7 @@ import com.ruoyi.system.service.ISysOperLogService;
 
 /**
  * 操作日志记录
- * 
+ *
  * @author ruoyi
  */
 @RestController
@@ -55,7 +55,7 @@ public class SysOperlogController extends BaseController
     @Log(title = "操作日志", businessType = BusinessType.DELETE)
     @RequiresPermissions("system:operlog:remove")
     @DeleteMapping("/{operIds}")
-    public AjaxResult remove(@PathVariable Long[] operIds)
+    public R remove(@PathVariable Long[] operIds)
     {
         return toAjax(operLogService.deleteOperLogByIds(operIds));
     }
@@ -63,7 +63,7 @@ public class SysOperlogController extends BaseController
     @RequiresPermissions("system:operlog:remove")
     @Log(title = "操作日志", businessType = BusinessType.CLEAN)
     @DeleteMapping("/clean")
-    public AjaxResult clean()
+    public R clean()
     {
         operLogService.cleanOperLog();
         return success();
@@ -71,7 +71,7 @@ public class SysOperlogController extends BaseController
 
     @InnerAuth
     @PostMapping
-    public AjaxResult add(@RequestBody SysOperLog operLog)
+    public R add(@RequestBody SysOperLog operLog)
     {
         return toAjax(operLogService.insertOperlog(operLog));
     }

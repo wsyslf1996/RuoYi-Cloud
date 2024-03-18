@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.ruoyi.common.core.web.controller.BaseController;
-import com.ruoyi.common.core.web.domain.AjaxResult;
+import com.ruoyi.common.core.web.domain.R;
 import com.ruoyi.common.core.web.page.TableDataInfo;
 import com.ruoyi.common.log.annotation.Log;
 import com.ruoyi.common.log.enums.BusinessType;
@@ -23,7 +23,7 @@ import com.ruoyi.system.service.ISysNoticeService;
 
 /**
  * 公告 信息操作处理
- * 
+ *
  * @author ruoyi
  */
 @RestController
@@ -50,7 +50,7 @@ public class SysNoticeController extends BaseController
      */
     @RequiresPermissions("system:notice:query")
     @GetMapping(value = "/{noticeId}")
-    public AjaxResult getInfo(@PathVariable Long noticeId)
+    public R getInfo(@PathVariable Long noticeId)
     {
         return success(noticeService.selectNoticeById(noticeId));
     }
@@ -61,7 +61,7 @@ public class SysNoticeController extends BaseController
     @RequiresPermissions("system:notice:add")
     @Log(title = "通知公告", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysNotice notice)
+    public R add(@Validated @RequestBody SysNotice notice)
     {
         notice.setCreateBy(SecurityUtils.getUsername());
         return toAjax(noticeService.insertNotice(notice));
@@ -73,7 +73,7 @@ public class SysNoticeController extends BaseController
     @RequiresPermissions("system:notice:edit")
     @Log(title = "通知公告", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@Validated @RequestBody SysNotice notice)
+    public R edit(@Validated @RequestBody SysNotice notice)
     {
         notice.setUpdateBy(SecurityUtils.getUsername());
         return toAjax(noticeService.updateNotice(notice));
@@ -85,7 +85,7 @@ public class SysNoticeController extends BaseController
     @RequiresPermissions("system:notice:remove")
     @Log(title = "通知公告", businessType = BusinessType.DELETE)
     @DeleteMapping("/{noticeIds}")
-    public AjaxResult remove(@PathVariable Long[] noticeIds)
+    public R remove(@PathVariable Long[] noticeIds)
     {
         return toAjax(noticeService.deleteNoticeByIds(noticeIds));
     }
