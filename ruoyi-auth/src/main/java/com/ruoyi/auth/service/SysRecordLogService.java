@@ -7,11 +7,11 @@ import com.ruoyi.common.core.constant.SecurityConstants;
 import com.ruoyi.common.core.utils.StringUtils;
 import com.ruoyi.common.core.utils.ip.IpUtils;
 import com.ruoyi.system.api.RemoteLogService;
-import com.ruoyi.system.api.domain.SysLogininfor;
+import com.ruoyi.system.api.domain.SysLoginInfo;
 
 /**
  * 记录日志方法
- * 
+ *
  * @author ruoyi
  */
 @Component
@@ -22,7 +22,7 @@ public class SysRecordLogService
 
     /**
      * 记录登录信息
-     * 
+     *
      * @param username 用户名
      * @param status 状态
      * @param message 消息内容
@@ -30,7 +30,7 @@ public class SysRecordLogService
      */
     public void recordLogininfor(String username, String status, String message)
     {
-        SysLogininfor logininfor = new SysLogininfor();
+        SysLoginInfo logininfor = new SysLoginInfo();
         logininfor.setUserName(username);
         logininfor.setIpaddr(IpUtils.getIpAddr());
         logininfor.setMsg(message);
@@ -43,6 +43,6 @@ public class SysRecordLogService
         {
             logininfor.setStatus(Constants.LOGIN_FAIL_STATUS);
         }
-        remoteLogService.saveLogininfor(logininfor, SecurityConstants.INNER);
+        remoteLogService.saveLoginInfo(logininfor, SecurityConstants.INNER);
     }
 }

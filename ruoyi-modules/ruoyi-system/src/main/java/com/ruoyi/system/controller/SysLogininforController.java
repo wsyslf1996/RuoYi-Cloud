@@ -20,12 +20,12 @@ import com.ruoyi.common.log.enums.BusinessType;
 import com.ruoyi.common.redis.service.RedisService;
 import com.ruoyi.common.security.annotation.InnerAuth;
 import com.ruoyi.common.security.annotation.RequiresPermissions;
-import com.ruoyi.system.api.domain.SysLogininfor;
+import com.ruoyi.system.api.domain.SysLoginInfo;
 import com.ruoyi.system.service.ISysLogininforService;
 
 /**
  * 系统访问记录
- * 
+ *
  * @author ruoyi
  */
 @RestController
@@ -40,20 +40,20 @@ public class SysLogininforController extends BaseController
 
     @RequiresPermissions("system:logininfor:list")
     @GetMapping("/list")
-    public TableDataInfo list(SysLogininfor logininfor)
+    public TableDataInfo list(SysLoginInfo logininfor)
     {
         startPage();
-        List<SysLogininfor> list = logininforService.selectLogininforList(logininfor);
+        List<SysLoginInfo> list = logininforService.selectLogininforList(logininfor);
         return getDataTable(list);
     }
 
     @Log(title = "登录日志", businessType = BusinessType.EXPORT)
     @RequiresPermissions("system:logininfor:export")
     @PostMapping("/export")
-    public void export(HttpServletResponse response, SysLogininfor logininfor)
+    public void export(HttpServletResponse response, SysLoginInfo logininfor)
     {
-        List<SysLogininfor> list = logininforService.selectLogininforList(logininfor);
-        ExcelUtil<SysLogininfor> util = new ExcelUtil<SysLogininfor>(SysLogininfor.class);
+        List<SysLoginInfo> list = logininforService.selectLogininforList(logininfor);
+        ExcelUtil<SysLoginInfo> util = new ExcelUtil<SysLoginInfo>(SysLoginInfo.class);
         util.exportExcel(response, list, "登录日志");
     }
 
@@ -85,7 +85,7 @@ public class SysLogininforController extends BaseController
 
     @InnerAuth
     @PostMapping
-    public AjaxResult add(@RequestBody SysLogininfor logininfor)
+    public AjaxResult add(@RequestBody SysLoginInfo logininfor)
     {
         return toAjax(logininforService.insertLogininfor(logininfor));
     }

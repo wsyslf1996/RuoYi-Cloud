@@ -6,12 +6,12 @@ import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
 import com.ruoyi.common.core.domain.R;
 import com.ruoyi.system.api.RemoteLogService;
-import com.ruoyi.system.api.domain.SysLogininfor;
+import com.ruoyi.system.api.domain.SysLoginInfo;
 import com.ruoyi.system.api.domain.SysOperLog;
 
 /**
  * 日志服务降级处理
- * 
+ *
  * @author ruoyi
  */
 @Component
@@ -32,7 +32,7 @@ public class RemoteLogFallbackFactory implements FallbackFactory<RemoteLogServic
             }
 
             @Override
-            public R<Boolean> saveLogininfor(SysLogininfor sysLogininfor, String source)
+            public R<Boolean> saveLoginInfo(SysLoginInfo sysLoginInfo, String source)
             {
                 return R.fail("保存登录日志失败:" + throwable.getMessage());
             }
